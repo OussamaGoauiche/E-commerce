@@ -33,11 +33,14 @@ public class User_login extends HttpServlet {
 			String password = request.getParameter("login-password");
 			UserDao udao = new UserDao(Dbconn.getConnection());
 			User user =udao.userLogin(email,password);
-			if(user!=null)
+			if(user!=null){
 				out.print("login succful");
+				request.getSession().setAttribute("auth", user);
+				response.sendRedirect("index.jsp");
+			}
 			else
 				out.print("login failed");
-			out.print(email +password );
+			out.print(email +" "+password );
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
